@@ -1,5 +1,4 @@
-# .github/workflows/reactjs.yml
-name: React.js CI
+name: React.js CI and Deploy
 
 on:
   push:
@@ -10,28 +9,41 @@ on:
       - main
 
 jobs:
-  build-and-test:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the code
-      - name: Checkout repository
+      # Step 1: Checkout the repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Set up Node.js
+      # Step 2: Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 16
 
-      # 3. Install dependencies
+      # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4. Run tests
+      # Step 4: Run tests (optional, remove if not needed)
       - name: Run tests
         run: npm test -- --watchAll=false
 
-      # 5. Build the React app
-      - name: Build the project
+      # Step 5: Build the React app
+      - name: Build the React app
         run: npm run build
+
+      # Step 6: Copy build to the docs folder
+      - name: Copy build to docs folder
+        run: mv build/* docs/
+
+      # Step 7: Commit and push the changes to the main branch
+      - name: Commit and push to main
+        run: |
+          git add docs/
+          git commit -m "Deploy to GitHub Pages"
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
