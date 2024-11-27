@@ -39,11 +39,11 @@ jobs:
       - name: Copy build to docs folder
         run: mv build/* docs/
 
-      # Step 7: Commit and push the changes to the main branch
-      - name: Commit and push to main
-        run: |
-          git add docs/
-          git commit -m "Deploy to GitHub Pages"
-          git push origin main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # # Step 7: Commit and push the changes to the main branch
+      # - name: Commit and push to main
+      #   run: |
+      #     git add docs/
+      #     git commit -m "Deploy to GitHub Pages"
+      #     git push origin main
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
